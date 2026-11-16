@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turma Bag - Pedidos Corporativos y Organizaciones</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+
+  <style>
+    :root {
+      --color-primary: #1b4332;            /* Verde bosque profundo */
+      --color-primary-hover: #122e22;      /* Verde pino oscuro */
+      --color-primary-light: #e8f3ee;      /* Verde salvia muy claro */
+      --color-accent: #c58b43;             /* Dorado / Kraft tostado */
+      --color-accent-light: #fbf5ec;       /* Crema dorado suave */
+      --color-bg-surface: #ffffff;
+      --color-text-main: #1c2420;          /* Carbón verdoso oscuro */
+      --color-text-muted: #5c6b63;         /* Gris musgo suave */
+      --color-border: #dce4df;             /* Borde lienzo natural */
+      --color-bg-page: #f4f6f4;            /* Fondo piedra / lino claro */
+      --color-card-bg: #ffffff;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-display: 'Fraunces', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+    }
+
+    body {
+      background-color: var(--color-bg-page);
+      color: var(--color-text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px 16px 140px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--color-primary), #2d6a4f);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(27, 67, 50, 0.22);
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--color-primary);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+      position: absolute;
+      right: 10px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #ef4444;
+    }
+    .status-dot.online { background-color: #10b981; }
+    .status-dot.syncing { background-color: #f59e0b; }
+
+    /* HERO BANNER */
+    .hero-banner {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(27, 67, 50, 0.08);
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Pestañas de Navegación */
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      background: #e4ebe6;
+      padding: 4px;
+      border-radius: var(--radius-md);
+    }
+
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--color-card-bg);
+      color: var(--color-primary);
+      box-shadow: 0 2px 6px rgba(27, 67, 50, 0.08);
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: 0 4px 14px rgba(27, 67, 50, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f67300;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    /* SECCIÓN VITRINA: SOLO TEXTO E IMAGEN */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 440px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .showcase-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      background: var(--color-bg-page);
+      border: 1px solid var(--color-border);
+    }
+
+    .showcase-img {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--color-primary-light);
+      flex-shrink: 0;
+    }
+
+    .showcase-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .showcase-name {
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      line-height: 1.25;
+    }
+
+    .showcase-desc {
+      font-size: 0.74rem;
+      color: var(--color-text-muted);
+      line-height: 1.3;
+    }
+
+    /* ACORDEÓN COLAPSABLE PARA CONTENIDO BOLSA EDITABLE */
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      padding: 2px 0;
+    }
+
+    .accordion-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-page);
+      color: var(--color-primary);
+      font-size: 0.76rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .accordion-header:hover .accordion-toggle-btn {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+    }
+
+    .accordion-chevron {
+      transition: transform 0.25s ease;
+    }
+
+    .accordion-card.open .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--color-border);
+    }
+
+    .accordion-card.open .accordion-body {
+      display: flex;
+    }
+
+    /* Lista de Productos */
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-card-bg);
+      padding: 10px 12px;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .product-item:hover {
+      border-color: var(--color-primary);
+    }
+
+    .product-item.selected-opt {
+      border-color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+
+    .prod-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .prod-thumb {
+      width:80px;
+      height:80px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--color-primary-light);
+      flex-shrink: 0;
+    }
+
+    .prod-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .prod-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--color-text-main);
+    }
+
+    .prod-desc {
+      font-size: 0.76rem;
+      color: var(--color-text-muted);
+      line-height: 1.3;
+    }
+
+    .prod-price-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin-top: 2px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .prod-included-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #2d6a4f;
+    }
+
+    /* Stepper */
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-bg-page);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .stepper button {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-primary);
+      transition: background 0.2s ease;
+    }
+
+    .stepper button:hover:not(:disabled) {
+      background: var(--color-primary-light);
+    }
+
+    .stepper button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .stepper-val {
+      min-width: 28px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--color-text-main);
+    }
+
+    /* Resumen de Precios y Cantidad de Unidades Pedidas */
+    .pricing-box {
+      background: linear-gradient(180deg, #f8fbf9 0%, #eef5f1 100%);
+      border: 1.5px solid #c3d9cc;
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .price-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #c3d9cc;
+    }
+
+    .price-line-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .price-line-val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+
+    .qty-textarea-wrap {
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #c3d9cc;
+      justify-content: space-between;
+    }
+
+    .qty-textarea-wrap label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .qty-textarea {
+      width: 15%;
+      height: 48px;
+      resize: none;
+      padding: 10px 14px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-align: right;
+      border: 1.5px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+      color: var(--color-primary);
+      outline: none;
+    }
+
+    .total-final-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 4px;
+    }
+
+    .total-final-label {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--color-text-main);
+    }
+
+    .total-final-amount {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+
+    /* Formulario de Datos */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-group label {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .field-group input,
+    .field-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 0.94rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg-page);
+      color: var(--color-text-main);
+      outline: none;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .field-group textarea {
+      min-height: 76px;
+      resize: vertical;
+    }
+
+    .field-group input:focus,
+    .field-group textarea:focus {
+      border-color: var(--color-primary);
+      background: #ffffff;
+    }
+
+    /* Summary Card Fijo */
+    .summary-card {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 580px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--color-border);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 -4px 18px rgba(27, 67, 50, 0.08);
+      z-index: 50;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .summary-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+
+    .summary-amount {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: var(--color-primary-hover);
+    }
+
+    .btn-submit:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    /* Info Banner & Bank Card */
+    .cause-banner {
+      background: var(--color-accent-light);
+      border: 1px solid #edd6b4;
+      padding: 13px 15px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #7c4d12;
+      font-size: 0.86rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .bank-card {
+      border-radius: var(--radius-md);
+      padding: 12px;
+      background: var(--color-bg-page);
+      border: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bank-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      text-transform: uppercase;
+    }
+
+    .bank-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .bank-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+
+    .bank-val-alias {
+      font-family: monospace;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--color-primary);
+    }
+
+    .bank-val-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .btn-copy-alias {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      background: var(--color-primary-light);
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .btn-copy-alias:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* Historial de Pedidos */
+    .order-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px;
+      background: var(--color-bg-page);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+    }
+
+    .order-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .order-item-total {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      width: fit-content;
+      text-transform: uppercase;
+    }
+
+    .status-pendiente { background: #fee2e2; color: #b91c1c; }
+    .status-pagado { background: #dcfce7; color: #15803d; }
+    .status-parcial { background: #fef3c7; color: #b45309; }
+    .status-proceso { background: #e0f2fe; color: #0369a1; }
+    .status-entregado { background: #f3e8ff; color: #6b21a8; }
+
+    .receipt-upload-box {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--color-border);
+    }
+
+    .receipt-link-pill, .btn-upload-receipt {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      width: 100%;
+      max-width: 460px;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-detail-box {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      background: var(--color-bg-page);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+
+    .btn-wa-action, .btn-close-modal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-wa-action { background: #25d366; color: #fff; }
+    .btn-close-modal { background: #e2e8f0; color: var(--color-text-main); }
+
+    .card-footer {
+      margin: 2em 0;
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+    }
+    #Turmabag_img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .sep {
+  border-top: 1px dashed lightgray;
+  margin: 10px 6px;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header style="display:none;">
+      <div class="brand">
+        <div class="logo-badge"><i data-lucide="shopping-bag" style="width:20px;height:20px;"></i></div>
+        <span class="brand-title">Turma Bag — Preventa</span>
+      </div>    
+    </header>
+
+    <!-- HERO - IMAGEN BANNER -->
+    <div class="hero-banner">
+      <img id="heroBannerImg" src="https://placehold.co/1080x420/1b4332/d4a373?text=TURMA+BAG+FIN+DE+A%C3%91O" alt="Banner Turma Bag">
+    </div>
+
+    
+      <!-- 0. SECCIÓN INFORMATIVA: SOLO TEXTO E IMAGEN DE LO QUE CONTIENE LA BOLSA -->
+      <section class="card">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="sparkles" style="width:18px;height:18px;"></i> ¿Qué es una Turma Bag?</h2>
+          <p class="section-subtitle">Es un bolso multiuso estilo matero, resistente y refozardo con forro interior.</p>
+        </div>
+        <div><img id="Turmabag_img" src="/turmabags_apliques.png" alt="Banner Turma Bag"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="sparkles" style="width:18px;height:18px;"></i> ¿Qué incluye cada Turma Bag?</h2>
+          <p class="section-subtitle">Cada Turma Bag incluye estos productos elaborados para compartir en estas fiestas.</p>
+        </div>
+        <div class="showcase-grid" id="showcaseContenidoBolsa"></div>
+      </section>
+
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" id="tabCatalogBtn"><i data-lucide="package" style="width:17px;height:17px;"></i>TURMA BAG</button>
+      <button class="tab-btn" id="tabOrdersBtn"><i data-lucide="clock" style="width:17px;height:17px;"></i> PEDIDOS</button>
+    </div>
+
+    <!-- PESTAÑA FORMULARIO -->
+    <div class="tab-pane active" id="paneCatalog">
+
+      <!-- 1. PRODUCTOS - CONTENIDO BOLSA (COLAPSADA POR DEFECTO) -->
+      <section class="card accordion-card" id="accordionContenidoCard">
+        <div class="accordion-header" id="accordionContenidoToggle">
+          <div class="section-header">
+            <h2 class="section-title"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i>Turma Bag</h2>
+            <p class="section-subtitle">Por defecto trae 1 unidad de cada ítem. Si deseás personalizar cantidades de cada producto, hacelo desde acá.</p>
+          </div>
+          <span class="accordion-toggle-btn">
+            <span id="accordionToggleText">Editar</span>
+            <i data-lucide="square-pen" class="square-pen" style="width:16px;height:16px;"></i>
+          </span>
+        </div>
+
+        <div class="accordion-body">
+          <div class="product-list" id="listContenidoBolsa"></div>
+        </div>
+      </section>
+
+      <!-- 2. PRODUCTOS - OPCIONALES -->
+      <section class="card">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="plus-circle" style="width:18px;height:18px;"></i>Opcionales</h2>
+          <p class="section-subtitle">Podés sumar extras opcionales a cada bolsa (se muestra el costo adicional por unidad).</p>
+        </div>
+        <div class="product-list" id="listOpcionales"></div>
+      </section>
+
+      <!-- 3. TURMA BAG - BOLSA MULTIUSO -->
+      <section class="card">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="stamp" style="width:18px;height:18px;"></i> Opcionales de la Bolsa</h2>
+          <p class="section-subtitle">También podés añadir personalizaciones en tus bolsos.</p>
+        </div>
+        <div class="product-list" id="listBolsaMultiuso"></div>
+      </section>
+
+      <!-- 4. CÁLCULO DE PRECIOS Y CANTIDAD DE UNIDADES PEDIDAS -->
+      <section class="pricing-box">
+        <div class="price-line">
+          <span class="price-line-label">Precio por Turma Bag</span>
+          <span class="price-line-val" id="precioBagBaseDisplay">$ 0</span>
+        </div>
+
+        <div class="price-line">
+          <span class="price-line-label">Precio por Turma Bag con Opcionales</span>
+          <span class="price-line-val" id="precioBagConOpcionalesDisplay">$ 0</span>
+        </div>
+
+        <div class="qty-textarea-wrap">
+          <label for="inputCantUnidades">Cantidad de Unidades Pedidas</label>
+          <textarea id="inputCantUnidades" class="qty-textarea" rows="1" inputmode="numeric" placeholder="1">1</textarea>
+        </div>
+
+        <div class="total-final-row">
+          <span class="total-final-label">TOTAL A ABONAR</span>
+          <span class="total-final-amount" id="totalAbonarBoxDisplay">$ 0</span>
+        </div>
+      </section>
+
+      <!-- 5. CONTACTO -->
+      <section class="card">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="building-2" style="width:18px;height:18px;"></i> Contacto</h2>
+          <p class="section-subtitle">Datos de la organización o institución solicitante.</p>
+        </div>
+        
+        <div class="field-group">
+          <label for="inputOrganizacion">Nombre de la Organización *</label>
+          <input type="text" id="inputOrganizacion" placeholder="Ej: Organización u Empresa" required />
+        </div>
+
+        <div class="field-group">
+          <label for="inputNombreApellido">Nombre y Apellido *</label>
+          <input type="text" id="inputNombreApellido" placeholder="Nombre y apellido del responsable" autocomplete="name" required />
+        </div>
+
+        <div class="field-group">
+          <label for="inputTelefono">Teléfono de Contacto *</label>
+          <input type="tel" id="inputTelefono" placeholder="Ej: 351 123 4567" autocomplete="tel" required />
+        </div>
+
+        <div class="field-group">
+          <label for="inputEmail">Correo Electrónico *</label>
+          <input type="email" id="inputEmail" placeholder="contacto@organizacion.org" autocomplete="email" required />
+        </div>
+
+        <div class="field-group">
+          <label for="inputFormaPago">Forma de Pago *</label>
+          <textarea id="inputFormaPago" placeholder="Indique modalidad de pago (ej: Transferencia bancaria, Seña 50% + saldo contra entrega, etc.)" required></textarea>
+        </div>          
+        <span class="sep"></span>
+
+          <div class="bank-card">
+          <div class="bank-header">
+            <i data-lucide="credit-card" style="width:16px;height:16px;"></i>
+            Datos para Transferencia
+          </div>
+          <div class="bank-info-row">
+            <div>
+              <div class="bank-label">Alias CVU</div>
+              <div class="bank-val-alias" id="aliasDisplay">conejo.estas.ahi</div>
+            </div>
+            <button type="button" class="btn-copy-alias" onclick="copyAlias()">
+              <i data-lucide="copy" style="width:14px;height:14px;"></i>
+              <span id="copyBtnText">Copiar</span>
+            </button>
+          </div>
+          <div class="bank-info-row">
+            <div><span class="bank-label">Titular: </span><span class="bank-val-name" id="titularDisplay">Marianela Leiva</span></div>
+            <div><span class="bank-label">DNI/CUIT: </span><span class="bank-val-name" id="cuitDisplay">27-30243851-5</span></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA PEDIDOS -->
+    <div class="tab-pane" id="paneOrders">
+      <section class="card">        
+        <div class="cause-banner">
+          <i data-lucide="receipt" style="width:22px;height:22px;flex-shrink:0;"></i>
+          <span>Transferí al Alias CVU <strong id="bannerAliasText">conejo.estas.ahi</strong> y adjuntá el <strong>Comprobante de Pago</strong> a tu pedido.</span>
+        </div>
+
+        <div class="bank-card">
+          <div class="bank-header">
+            <i data-lucide="credit-card" style="width:16px;height:16px;"></i>
+            Datos para Transferencia
+          </div>
+          <div class="bank-info-row">
+            <div>
+              <div class="bank-label">Alias CVU</div>
+              <div class="bank-val-alias" id="aliasDisplay">conejo.estas.ahi</div>
+            </div>
+            <button type="button" class="btn-copy-alias" onclick="copyAlias()">
+              <i data-lucide="copy" style="width:14px;height:14px;"></i>
+              <span id="copyBtnText">Copiar</span>
+            </button>
+          </div>
+          <div class="bank-info-row">
+            <div><span class="bank-label">Titular: </span><span class="bank-val-name" id="titularDisplay">Marianela Leiva</span></div>
+            <div><span class="bank-label">DNI/CUIT: </span><span class="bank-val-name" id="cuitDisplay">27-30243851-5</span></div>
+          </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:8px;"><i data-lucide="clipboard-list" style="width:18px;height:18px;"></i> Historial de Pedidos</h2>
+        <div id="ordersList"></div>
+      </section>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <section class="card-footer">
+      <span>Hecho con <i data-lucide="heart" style="width:16px;height:16px;vertical-align:middle;color:var(--color-primary);"></i> por <strong>Turma 310</strong></span>
+    </section>
+  </div>
+
+  <!-- Summary Card Fijo -->
+  <div class="summary-card" id="summaryCard">
+    <div class="summary-row">
+      <span class="summary-label">TOTAL A ABONAR</span>
+      <span class="summary-amount" id="totalStickyDisplay">$ 0</span>
+    </div>
+    <button class="btn-submit" id="btnSubmit" disabled>
+      <span id="btnSubmitText">Confirmar Pedido</span>
+      <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+    </button>
+  </div>
+  <div class="status-badge">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusLabel">Conectando...</span>
+  </div>
+
+  <!-- Modal de Pedido Registrado -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal">
+      <h3 class="modal-title"><i data-lucide="check-circle" style="width:24px;height:24px;"></i> ¡Pedido Registrado!</h3>
+      <div class="modal-detail-box" id="modalDetail"></div>
+      <a href="#" id="btnWaLink" target="_blank" class="btn-wa-action">
+        <i data-lucide="message-circle" style="width:18px;height:18px;"></i> Enviar resumen por WhatsApp
+      </a>
+      <button type="button" class="btn-close-modal" id="btnCloseOrderModal">Cerrar</button>
+    </div>
+  </div>
+  
+  <input type="file" id="receiptFileInput" style="display:none;" accept="image/*,.pdf" />
+
+  <script>
+    // PEGÁ AQUÍ LA URL DE IMPLEMENTACIÓN DE TU GOOGLE APPS SCRIPT
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFyHJILiMFflMc-mB3oKaR2gFO7OQwJC64YdjRBZ2GE8mrL8b7haf0wGVBtzu4QD9P/exec";
+
+    let state = {
+      porcentajeGanancia: 35,
+      porcentajeImprevistos: 15,
+      aliasCvu: "conejo.estas.ahi",
+      titularCuenta: "Marianela Leiva",
+      cuitDni: "27-30243851-5",
+      productos: [],
+      pedidos: []
+    };
+
+    let pendingUploadOrderId = null;
+
+    const statusDot = document.getElementById('statusDot');
+    const statusLabel = document.getElementById('statusLabel');
+    const inputCantUnidades = document.getElementById('inputCantUnidades');
+    const inputOrganizacion = document.getElementById('inputOrganizacion');
+    const inputNombreApellido = document.getElementById('inputNombreApellido');
+    const inputTelefono = document.getElementById('inputTelefono');
+    const inputEmail = document.getElementById('inputEmail');
+    const inputFormaPago = document.getElementById('inputFormaPago');
+    const orderModal = document.getElementById('orderModal');
+    const receiptFileInput = document.getElementById('receiptFileInput');
+
+    // Toggle Acordeón Contenido Bolsa
+    const accordionContenidoCard = document.getElementById('accordionContenidoCard');
+    const accordionToggleText = document.getElementById('accordionToggleText');
+    document.getElementById('accordionContenidoToggle').addEventListener('click', () => {
+      const isOpen = accordionContenidoCard.classList.toggle('open');
+      accordionToggleText.textContent = isOpen ? 'Ocultar' : 'Editar';
+    });
+
+    async function fetchSheetData() {
+      statusDot.className = 'status-dot syncing';
+      statusLabel.textContent = 'Sincronizando...';
+
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL);
+        const json = await response.json();
+
+        if (json && json.status === 'success') {
+          if (json.config) {
+            state.porcentajeGanancia = Number(json.config.porcentajeGanancia) || 0;
+            state.porcentajeImprevistos = Number(json.config.porcentajeImprevistos) || 0;
+
+            if (json.config.bannerUrl) {
+              document.getElementById('heroBannerImg').src = formatImageUrl(json.config.bannerUrl);
+            }
+            if (json.config.aliasCvu) {
+              state.aliasCvu = json.config.aliasCvu;
+              document.getElementById('aliasDisplay').textContent = json.config.aliasCvu;
+              document.getElementById('bannerAliasText').textContent = json.config.aliasCvu;
+            }
+            if (json.config.titularCuenta) {
+              document.getElementById('titularDisplay').textContent = json.config.titularCuenta;
+            }
+            if (json.config.cuitDni) {
+              document.getElementById('cuitDisplay').textContent = json.config.cuitDni;
+            }
+          }
+
+          // Por defecto: CONTENIDO_BOLSA = 1 unidad; OPCIONALES y BOLSA_MULTIUSO = 0 unidades
+          state.productos = (json.productos || []).map(p => ({
+            ...p,
+            costo: Number(p.costo) || 0,
+            precio: Number(p.precio) || 0,
+            cant: p.seccion === 'CONTENIDO_BOLSA' ? 1 : 0
+          }));
+
+          state.pedidos = json.pedidos || [];
+
+          statusDot.className = 'status-dot online';
+          statusLabel.textContent = 'En línea';
+        }
+      } catch (err) {
+        statusDot.className = 'status-dot';
+        statusLabel.textContent = 'Sin conexión';
+      }
+
+      renderAllSections();
+      renderOrders();
+    }
+
+    function formatImageUrl(url) {
+      const placeholder = 'https://placehold.co/120x120/e8f3ee/1b4332?text=Turma';
+      if (!url) return placeholder;
+      const cleanUrl = String(url).trim();
+      if (!cleanUrl) return placeholder;
+      if (cleanUrl.includes('drive.google.com') || cleanUrl.includes('googleusercontent.com')) {
+        const idMatch = cleanUrl.match(/\/d\/([a-zA-Z0-9_-]+)/) || cleanUrl.match(/id=([a-zA-Z0-9_-]+)/);
+        if (idMatch && idMatch[1]) return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w800`;
+      }
+      return cleanUrl;
+    }
+
+    function renderAllSections() {
+      const contenido = state.productos.filter(p => p.seccion === 'CONTENIDO_BOLSA');
+      const opcionales = state.productos.filter(p => p.seccion === 'OPCIONALES');
+      const bolsaMultiuso = state.productos.filter(p => p.seccion === 'BOLSA_MULTIUSO');
+
+      // 0. VITRINA INFORMATIVA (Solo texto e imagen, sin precios ni steppers)
+      document.getElementById('showcaseContenidoBolsa').innerHTML = contenido.map(p => `
+        <div class="showcase-card">
+          <img src="${formatImageUrl(p.imagen)}" class="showcase-img" alt="${p.nombre}" onerror="this.onerror=null; this.src='https://placehold.co/120x120/e8f3ee/1b4332?text=Bag';">
+          <div class="showcase-text">
+            <div class="showcase-name">${p.nombre}</div>
+            ${p.descripcion ? `<div class="showcase-desc">${p.descripcion}</div>` : ''}
+          </div>
+        </div>
+      `).join('');
+
+      // 1. CONTENIDO BOLSA EDITABLE (Colapsada por defecto, costos ocultos, cantidad por defecto 1)
+      document.getElementById('listContenidoBolsa').innerHTML = contenido.map(p => `
+        <div class="product-item">
+          <div class="prod-main">
+            <img src="${formatImageUrl(p.imagen)}" class="prod-thumb" alt="${p.nombre}" onerror="this.onerror=null; this.src='https://placehold.co/120x120/e8f3ee/1b4332?text=Bag';">
+            <div class="prod-info">
+              <div class="prod-name">${p.nombre}</div>
+              ${p.descripcion ? `<div class="prod-desc">${p.descripcion}</div>` : ''}
+              <span class="prod-included-tag"><i data-lucide="check" style="width:13px;height:13px;"></i> Incluido en bolsa</span>
+            </div>
+          </div>
+          <div class="stepper">
+            <button type="button" onclick="updateQty('${p.id}', -1)" ${p.cant <= 0 ? 'disabled' : ''}>
+              <i data-lucide="minus" style="width:14px;height:14px;"></i>
+            </button>
+            <span class="stepper-val">${p.cant}</span>
+            <button type="button" onclick="updateQty('${p.id}', 1)">
+              <i data-lucide="plus" style="width:14px;height:14px;"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      // 2. OPCIONALES y 3. BOLSA MULTIUSO: precio adicional visible, por defecto 0
+      const renderExtraItem = (p) => `
+        <div class="product-item ${p.cant > 0 ? 'selected-opt' : ''}">
+          <div class="prod-main">
+            <img src="${formatImageUrl(p.imagen)}" class="prod-thumb" alt="${p.nombre}" onerror="this.onerror=null; this.src='https://placehold.co/120x120/fbf5ec/c58b43?text=Extra';">
+            <div class="prod-info">
+              <div class="prod-name">${p.nombre}</div>
+              ${p.descripcion ? `<div class="prod-desc">${p.descripcion}</div>` : ''}
+              <div class="prod-price-badge">+ $ ${p.precio.toLocaleString('es-AR')} c/u</div>
+            </div>
+          </div>
+          <div class="stepper">
+            <button type="button" onclick="updateQty('${p.id}', -1)" ${p.cant <= 0 ? 'disabled' : ''}>
+              <i data-lucide="minus" style="width:14px;height:14px;"></i>
+            </button>
+            <span class="stepper-val">${p.cant}</span>
+            <button type="button" onclick="updateQty('${p.id}', 1)">
+              <i data-lucide="plus" style="width:14px;height:14px;"></i>
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('listOpcionales').innerHTML = opcionales.map(renderExtraItem).join('');
+      document.getElementById('listBolsaMultiuso').innerHTML = bolsaMultiuso.map(renderExtraItem).join('');
+
+      if (window.lucide) lucide.createIcons();
+      recalculateTotals();
+    }
+
+    window.updateQty = function(id, delta) {
+      const prod = state.productos.find(x => String(x.id) === String(id));
+      if (!prod) return;
+      const next = prod.cant + delta;
+      if (next >= 0) {
+        prod.cant = next;
+        renderAllSections();
+      }
+    };
+
+    function getCantidadUnidades() {
+      const raw = inputCantUnidades.value.replace(/[^0-9]/g, '');
+      const num = parseInt(raw, 10);
+      return isNaN(num) || num < 0 ? 0 : num;
+    }
+
+    function recalculateTotals() {
+      // 1. Suma de costos SOLO de CONTENIDO_BOLSA
+      const costoBaseBolsa = state.productos
+        .filter(p => p.seccion === 'CONTENIDO_BOLSA')
+        .reduce((acc, p) => acc + (p.costo * p.cant), 0);
+
+      // 2. Precio Venta Turma Bag Base = Costo Base Bolsa + Imprevistos (15%) + Porcentaje de Ganancia
+      const montoImprevistos = costoBaseBolsa * (state.porcentajeImprevistos / 100);
+      const subtotalConImprevistos = costoBaseBolsa + montoImprevistos;
+      const precioBagBase = Math.round(subtotalConImprevistos * (1 + (state.porcentajeGanancia / 100)));
+
+      // 3. Suma de Precios de Opcionales + Bolsa Multiuso seleccionados
+      const sumaOpcionales = state.productos
+        .filter(p => p.seccion !== 'CONTENIDO_BOLSA')
+        .reduce((acc, p) => acc + (p.precio * p.cant), 0);
+
+      const precioBagConOpcionales = precioBagBase + sumaOpcionales;
+
+      // 4. Total a abonar = Precio Bolsa Base + Opcionales * Cantidad de Unidades Pedidas
+      const cantUnidades = getCantidadUnidades();
+      const totalAbonar = precioBagConOpcionales * cantUnidades;
+
+      document.getElementById('precioBagBaseDisplay').textContent = `$ ${precioBagBase.toLocaleString('es-AR')}`;
+      document.getElementById('precioBagConOpcionalesDisplay').textContent = `$ ${precioBagConOpcionales.toLocaleString('es-AR')}`;
+      document.getElementById('totalAbonarBoxDisplay').textContent = `$ ${totalAbonar.toLocaleString('es-AR')}`;
+      document.getElementById('totalStickyDisplay').textContent = `$ ${totalAbonar.toLocaleString('es-AR')}`;
+
+      const isValid =
+        cantUnidades > 0 &&
+        totalAbonar > 0 &&
+        inputOrganizacion.value.trim().length > 0 &&
+        inputNombreApellido.value.trim().length > 0 &&
+        inputTelefono.value.trim().length > 0 &&
+        inputEmail.value.trim().length > 0 &&
+        inputFormaPago.value.trim().length > 0;
+
+      document.getElementById('btnSubmit').disabled = !isValid;
+
+      return { precioBagBase, precioBagConOpcionales, cantUnidades, totalAbonar };
+    }
+
+    inputCantUnidades.addEventListener('input', () => {
+      const cleaned = inputCantUnidades.value.replace(/[^0-9]/g, '');
+      if (inputCantUnidades.value !== cleaned) {
+        inputCantUnidades.value = cleaned;
+      }
+      recalculateTotals();
+    });
+
+    [inputOrganizacion, inputNombreApellido, inputTelefono, inputEmail, inputFormaPago].forEach(el => {
+      el.addEventListener('input', recalculateTotals);
+    });
+
+    window.copyAlias = function() {
+      navigator.clipboard.writeText(state.aliasCvu).then(() => {
+        const btnText = document.getElementById('copyBtnText');
+        btnText.textContent = "¡Copiado!";
+        setTimeout(() => { btnText.textContent = "Copiar"; }, 2000);
+      });
+    };
+
+    document.getElementById('btnSubmit').addEventListener('click', async () => {
+      const { precioBagBase, precioBagConOpcionales, cantUnidades, totalAbonar } = recalculateTotals();
+      if (cantUnidades <= 0) return;
+
+      const organizacion = inputOrganizacion.value.trim();
+      const nombreApellido = inputNombreApellido.value.trim();
+      const telefono = inputTelefono.value.trim();
+      const email = inputEmail.value.trim();
+      const formaPago = inputFormaPago.value.trim();
+
+      const contenidoList = state.productos
+        .filter(p => p.seccion === 'CONTENIDO_BOLSA' && p.cant > 0)
+        .map(p => `${p.cant}x ${p.nombre}`);
+
+      const opcionalesList = state.productos
+        .filter(p => p.seccion !== 'CONTENIDO_BOLSA' && p.cant > 0)
+        .map(p => `${p.cant}x ${p.nombre} ($${(p.cant * p.precio).toLocaleString('es-AR')})`);
+
+      const detalleContenido = contenidoList.join(', ');
+      const detalleOpcionales = opcionalesList.length > 0 ? opcionalesList.join(', ') : 'Sin opcionales';
+
+      const orderId = 'TB-' + Math.floor(1000 + Math.random() * 9000);
+      const now = new Date();
+      const fecha = now.toLocaleDateString('es-AR') + ' ' + now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+
+      const payload = {
+        action: 'nuevoPedido',
+        orderId,
+        organizacion,
+        nombreApellido,
+        telefono,
+        email,
+        formaPago,
+        cantBolsas: cantUnidades,
+        precioBagBase,
+        precioBagConOpcionales,
+        totalAbonar,
+        detalleContenido,
+        detalleOpcionales
+      };
+
+      document.getElementById('btnSubmitText').textContent = 'Enviando pedido...';
+      document.getElementById('btnSubmit').disabled = true;
+
+      document.getElementById('modalDetail').innerHTML = `
+        <div style="font-size:1.05rem;font-weight:800;color:var(--color-primary);margin-bottom:6px;">
+          Pedido N° ${orderId}
+        </div>
+        <strong>Organización:</strong> ${organizacion}<br>
+        <strong>Contacto:</strong> ${nombreApellido} (${telefono})<br>
+        <strong>Email:</strong> ${email}<br>
+        <strong>Forma de Pago:</strong> ${formaPago}<br>
+        <hr style="margin:8px 0;border:none;border-top:1px solid var(--color-border);">
+        <strong>Contenido por Bolsa:</strong><br>${detalleContenido}<br><br>
+        <strong>Opcionales por Bolsa:</strong><br>${detalleOpcionales}<br>
+        <hr style="margin:8px 0;border:none;border-top:1px solid var(--color-border);">
+        <strong>Precio Turma Bag Base:</strong> $${precioBagBase.toLocaleString('es-AR')}<br>
+        <strong>Precio Turma Bag c/Opcionales:</strong> $${precioBagConOpcionales.toLocaleString('es-AR')}<br>
+        <strong>Cantidad de Unidades:</strong> ${cantUnidades}<br>
+        <strong style="color:var(--color-primary);font-size:1.08rem;">Total a Abonar: $${totalAbonar.toLocaleString('es-AR')}</strong>
+      `;
+
+      const msgWa = `*Pedido Turma Bag - ${orderId}*%0A` +
+                    `*Organización:* ${encodeURIComponent(organizacion)}%0A` +
+                    `*Contacto:* ${encodeURIComponent(nombreApellido)} (${encodeURIComponent(telefono)})%0A` +
+                    `*Cantidad:* ${cantUnidades} unidades%0A` +
+                    `*Opcionales:* ${encodeURIComponent(detalleOpcionales)}%0A` +
+                    `*Total a Abonar:* $${totalAbonar.toLocaleString('es-AR')}`;
+
+      document.getElementById('btnWaLink').href = `https://wa.me/?text=${msgWa}`;
+
+      state.pedidos.unshift({
+        fecha,
+        orderId,
+        organizacion,
+        nombreApellido,
+        telefono,
+        cantBolsas: cantUnidades,
+        totalAbonar,
+        estadoPago: 'Pendiente',
+        comprobanteUrl: '',
+        detalleOpcionales
+      });
+
+      orderModal.classList.add('active');
+      document.getElementById('btnSubmitText').textContent = 'Confirmar Pedido';
+
+      state.productos.forEach(p => {
+        p.cant = p.seccion === 'CONTENIDO_BOLSA' ? 1 : 0;
+      });
+      inputCantUnidades.value = '1';
+      inputOrganizacion.value = '';
+      inputNombreApellido.value = '';
+      inputTelefono.value = '';
+      inputEmail.value = '';
+      inputFormaPago.value = '';
+
+      renderAllSections();
+      renderOrders();
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        console.error("Error al enviar pedido:", err);
+      }
+    });
+
+    document.getElementById('btnCloseOrderModal').onclick = () => orderModal.classList.remove('active');
+
+    function getStatusChip(rawEstado) {
+      const est = String(rawEstado || "").toLowerCase();
+      if (est.includes("entregado")) return `<span class="status-chip status-entregado">Entregado</span>`;
+      if (est.includes("parcial")) return `<span class="status-chip status-parcial">Pago Parcial</span>`;
+      if (est.includes("pagad") || est.includes("aprobad")) return `<span class="status-chip status-pagado">Pagado</span>`;
+      return `<span class="status-chip status-pendiente">${rawEstado || 'Pendiente'}</span>`;
+    }
+
+    function renderOrders() {
+      const list = document.getElementById('ordersList');
+      if (state.pedidos.length === 0) {
+        list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--color-text-muted);">Sin pedidos registrados aún.</div>';
+        return;
+      }
+
+      list.innerHTML = state.pedidos.map(p => {
+        const urls = p.comprobanteUrl ? String(p.comprobanteUrl).split(/[,\n]+/).map(u => u.trim()).filter(Boolean) : [];
+        const chipsComprobantes = urls.map((url, idx) => `
+          <a href="${url}" target="_blank" class="receipt-link-pill">
+            <i data-lucide="file-text" style="width:12px;height:12px;"></i> Comp. ${idx + 1}
+          </a>
+        `).join('');
+
+        return `
+        <div class="order-item">
+          <div>${getStatusChip(p.estadoPago)}</div>
+          <div class="order-item-header">
+            <div>
+              <strong>${p.orderId}</strong> — ${p.organizacion}
+              <div style="font-size:0.78rem;color:var(--color-text-muted);">${p.nombreApellido} · ${p.cantBolsas} bolsas · ${p.fecha}</div>
+            </div>
+            <div class="order-item-total">$ ${Number(p.totalAbonar).toLocaleString('es-AR')}</div>
+          </div>
+          <div style="font-size:0.82rem;color:var(--color-text-muted);"><strong>Opcionales:</strong> ${p.detalleOpcionales}</div>
+          <div class="receipt-upload-box">
+            ${chipsComprobantes}
+            <button type="button" class="btn-upload-receipt" onclick="triggerReceiptUpload('${p.orderId}')">
+              <i data-lucide="upload" style="width:13px;height:13px;"></i> Subir Comprobante
+            </button>
+          </div>
+        </div>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    window.triggerReceiptUpload = function(orderId) {
+      pendingUploadOrderId = orderId;
+      receiptFileInput.value = '';
+      receiptFileInput.click();
+    };
+
+    receiptFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file || !pendingUploadOrderId) return;
+
+      const orderId = pendingUploadOrderId;
+      alert(`Subiendo comprobante para el pedido ${orderId}...`);
+
+      try {
+        const base64 = await fileToBase64(file);
+        const res = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'uploadReceipt',
+            orderId,
+            fileName: `Comp_${orderId}_${Date.now()}_${file.name}`,
+            mimeType: file.type,
+            base64
+          })
+        });
+        const json = await res.json();
+        if (json && json.status === 'success') {
+          alert("¡Comprobante adjuntado con éxito!");
+          await fetchSheetData();
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        alert("Error al subir el comprobante. Intenta nuevamente.");
+      } finally {
+        pendingUploadOrderId = null;
+      }
+    });
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    document.getElementById('tabCatalogBtn').onclick = () => {
+      document.getElementById('tabCatalogBtn').classList.add('active');
+      document.getElementById('tabOrdersBtn').classList.remove('active');
+      document.getElementById('paneCatalog').classList.add('active');
+      document.getElementById('paneOrders').classList.remove('active');
+      document.getElementById('summaryCard').style.display = 'flex';
+    };
+
+    document.getElementById('tabOrdersBtn').onclick = () => {
+      document.getElementById('tabOrdersBtn').classList.add('active');
+      document.getElementById('tabCatalogBtn').classList.remove('active');
+      document.getElementById('paneOrders').classList.add('active');
+      document.getElementById('paneCatalog').classList.remove('active');
+      document.getElementById('summaryCard').style.display = 'none';
+      fetchSheetData();
+    };
+
+    if (window.lucide) lucide.createIcons();
+    fetchSheetData();
+  </script>
+</body>
+</html>
