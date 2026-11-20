@@ -104,8 +104,10 @@
       background: var(--color-card-bg);
       border: 1px solid var(--color-border);
       flex-shrink: 0;
-      position: absolute;
+      position: fixed;
+      top: 10px;
       right: 10px;
+      z-index: 60;
     }
 
     .status-dot {
@@ -129,7 +131,7 @@
       width: 100%;
       height: auto;
       object-fit: cover;
-      display: block!important;
+      display: block !important;
     }
 
     /* Pestañas de Navegación */
@@ -260,7 +262,7 @@
       line-height: 1.3;
     }
 
-    /* ACORDEÓN COLAPSABLE PARA CONTENIDO BOLSA EDITABLE */
+    /* ACORDEÓN COLAPSABLE PARA SECCIONES */
     .accordion-header {
       display: flex;
       align-items: center;
@@ -302,8 +304,8 @@
     .accordion-body {
       display: none;
       flex-direction: column;
-      gap: 10px;
-      padding-top: 8px;
+      gap: 12px;
+      padding-top: 10px;
       border-top: 1px dashed var(--color-border);
     }
 
@@ -348,8 +350,8 @@
     }
 
     .prod-thumb {
-      width:80px;
-      height:80px;
+      width: 80px;
+      height: 80px;
       border-radius: var(--radius-sm);
       object-fit: cover;
       background: var(--color-primary-light);
@@ -473,9 +475,22 @@
       color: var(--color-primary);
     }
 
+    .discount-select {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 1.5px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+      color: var(--color-primary);
+      outline: none;
+      cursor: pointer;
+    }
+
     .qty-textarea-wrap {
       display: flex;
       flex-direction: row;
+      align-items: center;
       gap: 6px;
       padding-bottom: 10px;
       border-bottom: 1px dashed #c3d9cc;
@@ -491,11 +506,12 @@
     }
 
     .qty-textarea {
-      width: 15%;
-      height: 48px;
+      width: 22%;
+      min-width: 72px;
+      height: 44px;
       resize: none;
-      padding: 10px 14px;
-      font-size: 1.2rem;
+      padding: 8px 12px;
+      font-size: 1.15rem;
       font-weight: 800;
       text-align: right;
       border: 1.5px solid var(--color-primary);
@@ -551,7 +567,7 @@
     }
 
     .field-group textarea {
-      min-height: 76px;
+      min-height: 68px;
       resize: vertical;
     }
 
@@ -844,7 +860,7 @@
     .btn-close-modal { background: #e2e8f0; color: var(--color-text-main); }
 
     .card-footer {
-      margin: 2em 0;
+      margin: 1em 0 2em 0;
       text-align: center;
       color: var(--color-text-muted);
       font-size: 0.85rem;
@@ -854,9 +870,9 @@
       border-radius: 8px;
     }
     .sep {
-  border-top: 1px dashed lightgray;
-  margin: 10px 6px;
-}
+      border-top: 1px dashed lightgray;
+      margin: 10px 6px;
+    }
   </style>
 </head>
 <body>
@@ -873,52 +889,78 @@
       <img id="heroCoverImg" src="https://placehold.co/1080x420/1b4332/d4a373?text=TURMA+BAG+FIN+DE+A%C3%91O" alt="TurmaBag">
     </div>
 
-
     <!-- PESTAÑA FORMULARIO -->
     <div class="tab-pane active" id="paneCatalog">
 
-          
-      <!-- 0. SECCIÓN INFORMATIVA: SOLO TEXTO E IMAGEN DE LO QUE CONTIENE LA BOLSA -->
-      <section class="card">
-        <div class="section-header">
-          <h2 class="section-title"><i data-lucide="sparkles" style="width:18px;height:18px;"></i> ¿Qué es una Turma Bag?</h2>
-          <p class="section-subtitle">Es un bolso multiuso estilo matero, resistente, refozardo con lienzo interior.</p>
-          <p>¿Qué incluye cada Turma Bag</p>
-          <p class="section-subtitle">Cada Turma Bag incluye estos productos elaborados para compartir en estas fiestas.</p>
-        </div>
-        <div class="showcase-grid" id="showcaseContenidoBolsa"></div>
-      </section>
-
-
-      <!-- 1. PRODUCTOS - OPCIONALES -->
-      <section class="card">
-        <div class="section-header">
-          <h2 class="section-title"><i data-lucide="plus-circle" style="width:18px;height:18px;"></i>Sumar Opcionales</h2>
-          <p class="section-subtitle">Podés sumar extras opcionales a cada bolsa (se muestra el costo adicional por unidad).</p>
-        </div>
-        <div class="product-list" id="listOpcionales"></div>
-      </section>
-
-      <!-- 2. TURMA BAG - BOLSA MULTIUSO -->
-      <section class="card">
-        <div class="section-header">
-          <h2 class="section-title"><i data-lucide="stamp" style="width:18px;height:18px;"></i> Opcionales de la Bolsa</h2>
-          <p class="section-subtitle">También podés añadir personalizaciones en tus bolsos.</p>
-        </div>
-        <div><img id="Turmabag_img" src="/turmabags_apliques.png" alt="Banner Turma Bag"></div>
-        <div class="product-list" id="listBolsaMultiuso"></div>
-      </section>
-
-      <!-- 4. PRODUCTOS - CONTENIDO BOLSA (COLAPSADA POR DEFECTO) -->
-      <section class="card accordion-card" id="accordionContenidoCard">
-        <div class="accordion-header" id="accordionContenidoToggle">
+      <!-- 0. SECCIÓN INFORMATIVA (COLAPSADA POR DEFECTO) -->
+      <section class="card accordion-card" id="accordionInfoCard">
+        <div class="accordion-header" data-target="accordionInfoCard">
           <div class="section-header">
-            <h2 class="section-title"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i>Turma Bag - Editar Contenido</h2>
-            <p class="section-subtitle">Por defecto trae 1 unidad de cada ítem. Si deseás personalizar cantidades de cada producto, hacelo desde acá.</p>
+            <h2 class="section-title"><i data-lucide="sparkles" style="width:18px;height:18px;"></i> ¿Qué es una Turma Bag?</h2>
+            <p class="section-subtitle">Conocé el bolso multiuso y los productos incluidos.</p>
           </div>
           <span class="accordion-toggle-btn">
-            <span id="accordionToggleText">Editar</span>
-            <i data-lucide="square-pen" class="square-pen" style="width:16px;height:16px;"></i>
+            <span class="toggle-label">Ver</span>
+            <i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i>
+          </span>
+        </div>
+
+        <div class="accordion-body">
+          <p class="section-subtitle">Es un bolso multiuso estilo matero, resistente, reforzado con lienzo interior.</p>
+          <p style="font-size:0.86rem;font-weight:700;color:var(--color-primary);">¿Qué incluye cada Turma Bag?</p>
+          <p class="section-subtitle">Cada Turma Bag incluye estos productos elaborados para compartir en estas fiestas.</p>
+          <div class="showcase-grid" id="showcaseContenidoBolsa"></div>
+        </div>
+      </section>
+
+      <!-- 1. PRODUCTOS - OPCIONALES (COLAPSADA POR DEFECTO) -->
+      <section class="card accordion-card" id="accordionOpcionalesCard">
+        <div class="accordion-header" data-target="accordionOpcionalesCard">
+          <div class="section-header">
+            <h2 class="section-title"><i data-lucide="plus-circle" style="width:18px;height:18px;"></i> Sumar Opcionales</h2>
+            <p class="section-subtitle">Podés sumar extras opcionales a cada bolsa.</p>
+          </div>
+          <span class="accordion-toggle-btn">
+            <span class="toggle-label">Ver</span>
+            <i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i>
+          </span>
+        </div>
+
+        <div class="accordion-body">
+          <p class="section-subtitle">Se muestra el costo adicional por unidad.</p>
+          <div class="product-list" id="listOpcionales"></div>
+        </div>
+      </section>
+
+      <!-- 2. TURMA BAG - BOLSA MULTIUSO (COLAPSADA POR DEFECTO) -->
+      <section class="card accordion-card" id="accordionBolsaCard">
+        <div class="accordion-header" data-target="accordionBolsaCard">
+          <div class="section-header">
+            <h2 class="section-title"><i data-lucide="stamp" style="width:18px;height:18px;"></i> Opcionales de la Bolsa</h2>
+            <p class="section-subtitle">Añadí personalizaciones y apliques en tus bolsos.</p>
+          </div>
+          <span class="accordion-toggle-btn">
+            <span class="toggle-label">Ver</span>
+            <i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i>
+          </span>
+        </div>
+
+        <div class="accordion-body">
+          <div><img id="Turmabag_img" src="/turmabags_apliques.png" alt="Banner Turma Bag"></div>
+          <div class="product-list" id="listBolsaMultiuso"></div>
+        </div>
+      </section>
+
+      <!-- 3. PRODUCTOS - CONTENIDO BOLSA (COLAPSADA POR DEFECTO) -->
+      <section class="card accordion-card" id="accordionContenidoCard">
+        <div class="accordion-header" data-target="accordionContenidoCard">
+          <div class="section-header">
+            <h2 class="section-title"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i> Turma Bag - Editar Contenido</h2>
+            <p class="section-subtitle">Por defecto trae 1 unidad de cada ítem. Personalizá cantidades acá.</p>
+          </div>
+          <span class="accordion-toggle-btn">
+            <span class="toggle-label">Editar</span>
+            <i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i>
           </span>
         </div>
 
@@ -926,7 +968,6 @@
           <div class="product-list" id="listContenidoBolsa"></div>
         </div>
       </section>
-
 
       <!-- 4. CÁLCULO DE PRECIOS Y CANTIDAD DE UNIDADES PEDIDAS -->
       <section class="pricing-box">
@@ -940,6 +981,16 @@
           <span class="price-line-val" id="precioBagConOpcionalesDisplay">$ 0</span>
         </div>
 
+        <div class="price-line">
+          <label for="selectDescuento" class="price-line-label">Descuento (%)</label>
+          <select id="selectDescuento" class="discount-select">
+            <option value="0">Sin descuento (0%)</option>
+            <option value="5">5% OFF</option>
+            <option value="10">10% OFF</option>
+            <option value="15">15% OFF</option>
+          </select>
+        </div>
+
         <div class="qty-textarea-wrap">
           <label for="inputCantUnidades">Cantidad de Unidades Pedidas</label>
           <textarea id="inputCantUnidades" class="qty-textarea" rows="1" inputmode="numeric" placeholder="1">1</textarea>
@@ -951,7 +1002,7 @@
         </div>
       </section>
 
-      <!-- 5. CONTACTO -->
+      <!-- 5. CONTACTO (ABIERTA POR DEFECTO) -->
       <section class="card">
         <div class="section-header">
           <h2 class="section-title"><i data-lucide="building-2" style="width:18px;height:18px;"></i> Contacto</h2>
@@ -979,12 +1030,23 @@
         </div>
 
         <div class="field-group">
+          <label for="inputFechaEntrega">Fecha de Entrega Estimada *</label>
+          <input type="date" id="inputFechaEntrega" required />
+        </div>
+
+        <div class="field-group">
+          <label for="inputSolicitadoA">Pedido solicitado a... *</label>
+          <textarea id="inputSolicitadoA" rows="2" placeholder="Nombre del vendedor o referente comercial" required></textarea>
+        </div>
+
+        <div class="field-group">
           <label for="inputFormaPago">Forma de Pago *</label>
           <textarea id="inputFormaPago" placeholder="Indique modalidad de pago (ej: Transferencia bancaria, Seña 50% + saldo contra entrega, etc.)" required></textarea>
         </div>          
+
         <span class="sep"></span>
 
-          <div class="bank-card">
+        <div class="bank-card">
           <div class="bank-header">
             <i data-lucide="credit-card" style="width:16px;height:16px;"></i>
             Datos para Transferencia
@@ -1023,16 +1085,16 @@
           <div class="bank-info-row">
             <div>
               <div class="bank-label">Alias CVU</div>
-              <div class="bank-val-alias" id="aliasDisplay">conejo.estas.ahi</div>
+              <div class="bank-val-alias" id="aliasDisplayOrders">conejo.estas.ahi</div>
             </div>
             <button type="button" class="btn-copy-alias" onclick="copyAlias()">
               <i data-lucide="copy" style="width:14px;height:14px;"></i>
-              <span id="copyBtnText">Copiar</span>
+              <span id="copyBtnTextOrders">Copiar</span>
             </button>
           </div>
           <div class="bank-info-row">
-            <div><span class="bank-label">Titular: </span><span class="bank-val-name" id="titularDisplay">Marianela Leiva</span></div>
-            <div><span class="bank-label">DNI/CUIT: </span><span class="bank-val-name" id="cuitDisplay">27-30243851-5</span></div>
+            <div><span class="bank-label">Titular: </span><span class="bank-val-name" id="titularDisplayOrders">Marianela Leiva</span></div>
+            <div><span class="bank-label">DNI/CUIT: </span><span class="bank-val-name" id="cuitDisplayOrders">27-30243851-5</span></div>
           </div>
         </div>
 
@@ -1041,6 +1103,7 @@
       </section>
     </div>
 
+    <!-- MENÚ TABS ABAJO DE TODO -->
     <div class="tabs-nav">
       <button class="tab-btn active" id="tabCatalogBtn"><i data-lucide="package" style="width:17px;height:17px;"></i>TURMA BAG</button>
       <button class="tab-btn" id="tabOrdersBtn"><i data-lucide="clock" style="width:17px;height:17px;"></i> PEDIDOS</button>
@@ -1063,9 +1126,10 @@
       <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
     </button>
   </div>
+
   <div class="status-badge">
-        <div class="status-dot" id="statusDot"></div>
-        <span id="statusLabel">Conectando...</span>
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusLabel">Conectando...</span>
   </div>
 
   <!-- Modal de Pedido Registrado -->
@@ -1083,12 +1147,13 @@
   <input type="file" id="receiptFileInput" style="display:none;" accept="image/*,.pdf" />
 
   <script>
-    // PEGÁ AQUÍ LA URL DE IMPLEMENTACIÓN DE TU GOOGLE APPS SCRIPT
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFyHJILiMFflMc-mB3oKaR2gFO7OQwJC64YdjRBZ2GE8mrL8b7haf0wGVBtzu4QD9P/exec";
 
     let state = {
       porcentajeGanancia: 35,
       porcentajeImprevistos: 15,
+      costoBolsa: 0,
+      descuentos: [5, 10, 15],
       aliasCvu: "conejo.estas.ahi",
       titularCuenta: "Marianela Leiva",
       cuitDni: "27-30243851-5",
@@ -1100,22 +1165,53 @@
 
     const statusDot = document.getElementById('statusDot');
     const statusLabel = document.getElementById('statusLabel');
+    const selectDescuento = document.getElementById('selectDescuento');
     const inputCantUnidades = document.getElementById('inputCantUnidades');
     const inputOrganizacion = document.getElementById('inputOrganizacion');
     const inputNombreApellido = document.getElementById('inputNombreApellido');
     const inputTelefono = document.getElementById('inputTelefono');
     const inputEmail = document.getElementById('inputEmail');
+    const inputFechaEntrega = document.getElementById('inputFechaEntrega');
+    const inputSolicitadoA = document.getElementById('inputSolicitadoA');
     const inputFormaPago = document.getElementById('inputFormaPago');
     const orderModal = document.getElementById('orderModal');
     const receiptFileInput = document.getElementById('receiptFileInput');
 
-    // Toggle Acordeón Contenido Bolsa
-    const accordionContenidoCard = document.getElementById('accordionContenidoCard');
-    const accordionToggleText = document.getElementById('accordionToggleText');
-    document.getElementById('accordionContenidoToggle').addEventListener('click', () => {
-      const isOpen = accordionContenidoCard.classList.toggle('open');
-      accordionToggleText.textContent = isOpen ? 'Ocultar' : 'Editar';
+    // Control unificado de Acordeones (todos inician colapsados)
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const targetId = header.getAttribute('data-target');
+        const card = document.getElementById(targetId);
+        if (!card) return;
+        const isOpen = card.classList.toggle('open');
+        const labelSpan = header.querySelector('.toggle-label');
+        if (labelSpan) {
+          if (targetId === 'accordionContenidoCard') {
+            labelSpan.textContent = isOpen ? 'Ocultar' : 'Editar';
+          } else {
+            labelSpan.textContent = isOpen ? 'Ocultar' : 'Ver';
+          }
+        }
+      });
     });
+
+    function renderDiscountOptions(descuentosArr) {
+      const prevVal = selectDescuento.value;
+      const opciones = (Array.isArray(descuentosArr) && descuentosArr.length === 3)
+        ? descuentosArr
+        : [5, 10, 15];
+
+      selectDescuento.innerHTML = `
+        <option value="0">Sin descuento (0%)</option>
+        ${opciones.map(d => `<option value="${Number(d)}">${Number(d)}% OFF</option>`).join('')}
+      `;
+
+      if ([0, ...opciones.map(Number)].includes(Number(prevVal))) {
+        selectDescuento.value = prevVal;
+      } else {
+        selectDescuento.value = "0";
+      }
+    }
 
     async function fetchSheetData() {
       statusDot.className = 'status-dot syncing';
@@ -1129,6 +1225,12 @@
           if (json.config) {
             state.porcentajeGanancia = Number(json.config.porcentajeGanancia) || 0;
             state.porcentajeImprevistos = Number(json.config.porcentajeImprevistos) || 0;
+            state.costoBolsa = Number(json.config.costoBolsa) || 0;
+
+            if (Array.isArray(json.config.descuentos) && json.config.descuentos.length === 3) {
+              state.descuentos = json.config.descuentos.map(Number);
+              renderDiscountOptions(state.descuentos);
+            }
 
             if (json.config.bannerUrl) {
               document.getElementById('heroCoverImg').src = formatImageUrl(json.config.bannerUrl);
@@ -1136,17 +1238,19 @@
             if (json.config.aliasCvu) {
               state.aliasCvu = json.config.aliasCvu;
               document.getElementById('aliasDisplay').textContent = json.config.aliasCvu;
+              document.getElementById('aliasDisplayOrders').textContent = json.config.aliasCvu;
               document.getElementById('bannerAliasText').textContent = json.config.aliasCvu;
             }
             if (json.config.titularCuenta) {
               document.getElementById('titularDisplay').textContent = json.config.titularCuenta;
+              document.getElementById('titularDisplayOrders').textContent = json.config.titularCuenta;
             }
             if (json.config.cuitDni) {
               document.getElementById('cuitDisplay').textContent = json.config.cuitDni;
+              document.getElementById('cuitDisplayOrders').textContent = json.config.cuitDni;
             }
           }
 
-          // Por defecto: CONTENIDO_BOLSA = 1 unidad; OPCIONALES y BOLSA_MULTIUSO = 0 unidades
           state.productos = (json.productos || []).map(p => ({
             ...p,
             costo: Number(p.costo) || 0,
@@ -1185,7 +1289,7 @@
       const opcionales = state.productos.filter(p => p.seccion === 'OPCIONALES');
       const bolsaMultiuso = state.productos.filter(p => p.seccion === 'BOLSA_MULTIUSO');
 
-      // 0. VITRINA INFORMATIVA (Solo texto e imagen, sin precios ni steppers)
+      // 0. VITRINA INFORMATIVA
       document.getElementById('showcaseContenidoBolsa').innerHTML = contenido.map(p => `
         <div class="showcase-card">
           <img src="${formatImageUrl(p.imagen)}" class="showcase-img" alt="${p.nombre}" onerror="this.onerror=null; this.src='https://placehold.co/120x120/e8f3ee/1b4332?text=Bag';">
@@ -1196,7 +1300,7 @@
         </div>
       `).join('');
 
-      // 1. CONTENIDO BOLSA EDITABLE (Colapsada por defecto, costos ocultos, cantidad por defecto 1)
+      // 1. CONTENIDO BOLSA EDITABLE
       document.getElementById('listContenidoBolsa').innerHTML = contenido.map(p => `
         <div class="product-item">
           <div class="prod-main">
@@ -1219,7 +1323,7 @@
         </div>
       `).join('');
 
-      // 2. OPCIONALES y 3. BOLSA MULTIUSO: precio adicional visible, por defecto 0
+      // 2. OPCIONALES y 3. BOLSA MULTIUSO
       const renderExtraItem = (p) => `
         <div class="product-item ${p.cant > 0 ? 'selected-opt' : ''}">
           <div class="prod-main">
@@ -1266,12 +1370,14 @@
     }
 
     function recalculateTotals() {
-      // 1. Suma de costos SOLO de CONTENIDO_BOLSA
-      const costoBaseBolsa = state.productos
+      // 1. Suma de costos de CONTENIDO_BOLSA + Costo Bolsa desde Configuración
+      const costoProductos = state.productos
         .filter(p => p.seccion === 'CONTENIDO_BOLSA')
         .reduce((acc, p) => acc + (p.costo * p.cant), 0);
 
-      // 2. Precio Venta Turma Bag Base = Costo Base Bolsa + Imprevistos (15%) + Porcentaje de Ganancia
+      const costoBaseBolsa = costoProductos + state.costoBolsa;
+
+      // 2. Precio Venta Turma Bag Base = Costo Base Bolsa + Imprevistos + Ganancia
       const montoImprevistos = costoBaseBolsa * (state.porcentajeImprevistos / 100);
       const subtotalConImprevistos = costoBaseBolsa + montoImprevistos;
       const precioBagBase = Math.round(subtotalConImprevistos * (1 + (state.porcentajeGanancia / 100)));
@@ -1283,9 +1389,13 @@
 
       const precioBagConOpcionales = precioBagBase + sumaOpcionales;
 
-      // 4. Total a abonar = Precio Bolsa Base + Opcionales * Cantidad de Unidades Pedidas
+      // 4. Aplicar Descuento (%) seleccionado sobre el precio de venta
+      const descuentoPorcentaje = Number(selectDescuento.value) || 0;
+      const precioUnitarioFinal = Math.round(precioBagConOpcionales * (1 - (descuentoPorcentaje / 100)));
+
+      // 5. Total a abonar
       const cantUnidades = getCantidadUnidades();
-      const totalAbonar = precioBagConOpcionales * cantUnidades;
+      const totalAbonar = precioUnitarioFinal * cantUnidades;
 
       document.getElementById('precioBagBaseDisplay').textContent = `$ ${precioBagBase.toLocaleString('es-AR')}`;
       document.getElementById('precioBagConOpcionalesDisplay').textContent = `$ ${precioBagConOpcionales.toLocaleString('es-AR')}`;
@@ -1299,12 +1409,23 @@
         inputNombreApellido.value.trim().length > 0 &&
         inputTelefono.value.trim().length > 0 &&
         inputEmail.value.trim().length > 0 &&
+        inputFechaEntrega.value.trim().length > 0 &&
+        inputSolicitadoA.value.trim().length > 0 &&
         inputFormaPago.value.trim().length > 0;
 
       document.getElementById('btnSubmit').disabled = !isValid;
 
-      return { precioBagBase, precioBagConOpcionales, cantUnidades, totalAbonar };
+      return {
+        precioBagBase,
+        precioBagConOpcionales,
+        descuentoPorcentaje,
+        precioUnitarioFinal,
+        cantUnidades,
+        totalAbonar
+      };
     }
+
+    selectDescuento.addEventListener('change', recalculateTotals);
 
     inputCantUnidades.addEventListener('input', () => {
       const cleaned = inputCantUnidades.value.replace(/[^0-9]/g, '');
@@ -1314,26 +1435,53 @@
       recalculateTotals();
     });
 
-    [inputOrganizacion, inputNombreApellido, inputTelefono, inputEmail, inputFormaPago].forEach(el => {
+    [
+      inputOrganizacion,
+      inputNombreApellido,
+      inputTelefono,
+      inputEmail,
+      inputFechaEntrega,
+      inputSolicitadoA,
+      inputFormaPago
+    ].forEach(el => {
       el.addEventListener('input', recalculateTotals);
     });
 
     window.copyAlias = function() {
       navigator.clipboard.writeText(state.aliasCvu).then(() => {
         const btnText = document.getElementById('copyBtnText');
-        btnText.textContent = "¡Copiado!";
-        setTimeout(() => { btnText.textContent = "Copiar"; }, 2000);
+        const btnTextOrders = document.getElementById('copyBtnTextOrders');
+        if (btnText) btnText.textContent = "¡Copiado!";
+        if (btnTextOrders) btnTextOrders.textContent = "¡Copiado!";
+        setTimeout(() => {
+          if (btnText) btnText.textContent = "Copiar";
+          if (btnTextOrders) btnTextOrders.textContent = "Copiar";
+        }, 2000);
       });
     };
 
+    function formatFechaArg(isoDate) {
+      if (!isoDate) return '';
+      const parts = isoDate.split('-');
+      return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : isoDate;
+    }
+
     document.getElementById('btnSubmit').addEventListener('click', async () => {
-      const { precioBagBase, precioBagConOpcionales, cantUnidades, totalAbonar } = recalculateTotals();
+      const {
+        precioBagBase,
+        precioBagConOpcionales,
+        descuentoPorcentaje,
+        cantUnidades,
+        totalAbonar
+      } = recalculateTotals();
       if (cantUnidades <= 0) return;
 
       const organizacion = inputOrganizacion.value.trim();
       const nombreApellido = inputNombreApellido.value.trim();
       const telefono = inputTelefono.value.trim();
       const email = inputEmail.value.trim();
+      const fechaEntrega = formatFechaArg(inputFechaEntrega.value.trim());
+      const solicitadoA = inputSolicitadoA.value.trim();
       const formaPago = inputFormaPago.value.trim();
 
       const contenidoList = state.productos
@@ -1362,9 +1510,12 @@
         cantBolsas: cantUnidades,
         precioBagBase,
         precioBagConOpcionales,
+        descuentoPorcentaje,
         totalAbonar,
         detalleContenido,
-        detalleOpcionales
+        detalleOpcionales,
+        fechaEntrega,
+        solicitadoA
       };
 
       document.getElementById('btnSubmitText').textContent = 'Enviando pedido...';
@@ -1377,6 +1528,8 @@
         <strong>Organización:</strong> ${organizacion}<br>
         <strong>Contacto:</strong> ${nombreApellido} (${telefono})<br>
         <strong>Email:</strong> ${email}<br>
+        <strong>Fecha de Entrega Estimada:</strong> ${fechaEntrega}<br>
+        <strong>Pedido solicitado a:</strong> ${solicitadoA}<br>
         <strong>Forma de Pago:</strong> ${formaPago}<br>
         <hr style="margin:8px 0;border:none;border-top:1px solid var(--color-border);">
         <strong>Contenido por Bolsa:</strong><br>${detalleContenido}<br><br>
@@ -1384,6 +1537,7 @@
         <hr style="margin:8px 0;border:none;border-top:1px solid var(--color-border);">
         <strong>Precio Turma Bag Base:</strong> $${precioBagBase.toLocaleString('es-AR')}<br>
         <strong>Precio Turma Bag c/Opcionales:</strong> $${precioBagConOpcionales.toLocaleString('es-AR')}<br>
+        <strong>Descuento Aplicado:</strong> ${descuentoPorcentaje}%<br>
         <strong>Cantidad de Unidades:</strong> ${cantUnidades}<br>
         <strong style="color:var(--color-primary);font-size:1.08rem;">Total a Abonar: $${totalAbonar.toLocaleString('es-AR')}</strong>
       `;
@@ -1391,7 +1545,10 @@
       const msgWa = `*Pedido Turma Bag - ${orderId}*%0A` +
                     `*Organización:* ${encodeURIComponent(organizacion)}%0A` +
                     `*Contacto:* ${encodeURIComponent(nombreApellido)} (${encodeURIComponent(telefono)})%0A` +
+                    `*Entrega Estimada:* ${encodeURIComponent(fechaEntrega)}%0A` +
+                    `*Solicitado a:* ${encodeURIComponent(solicitadoA)}%0A` +
                     `*Cantidad:* ${cantUnidades} unidades%0A` +
+                    `*Descuento:* ${descuentoPorcentaje}%%0A` +
                     `*Opcionales:* ${encodeURIComponent(detalleOpcionales)}%0A` +
                     `*Total a Abonar:* $${totalAbonar.toLocaleString('es-AR')}`;
 
@@ -1407,7 +1564,9 @@
         totalAbonar,
         estadoPago: 'Pendiente',
         comprobanteUrl: '',
-        detalleOpcionales
+        detalleOpcionales,
+        fechaEntrega,
+        solicitadoA
       });
 
       orderModal.classList.add('active');
@@ -1416,11 +1575,14 @@
       state.productos.forEach(p => {
         p.cant = p.seccion === 'CONTENIDO_BOLSA' ? 1 : 0;
       });
+      selectDescuento.value = '0';
       inputCantUnidades.value = '1';
       inputOrganizacion.value = '';
       inputNombreApellido.value = '';
       inputTelefono.value = '';
       inputEmail.value = '';
+      inputFechaEntrega.value = '';
+      inputSolicitadoA.value = '';
       inputFormaPago.value = '';
 
       renderAllSections();
@@ -1470,6 +1632,7 @@
             <div>
               <strong>${p.orderId}</strong> — ${p.organizacion}
               <div style="font-size:0.78rem;color:var(--color-text-muted);">${p.nombreApellido} · ${p.cantBolsas} bolsas · ${p.fecha}</div>
+              ${p.fechaEntrega ? `<div style="font-size:0.76rem;color:var(--color-primary);font-weight:600;">Entrega estimada: ${p.fechaEntrega}${p.solicitadoA ? ` · Solicitado a: ${p.solicitadoA}` : ''}</div>` : ''}
             </div>
             <div class="order-item-total">$ ${Number(p.totalAbonar).toLocaleString('es-AR')}</div>
           </div>
@@ -1553,6 +1716,7 @@
       fetchSheetData();
     };
 
+    renderDiscountOptions(state.descuentos);
     if (window.lucide) lucide.createIcons();
     fetchSheetData();
   </script>
