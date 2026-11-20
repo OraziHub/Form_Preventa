@@ -873,33 +873,43 @@
       <img id="heroCoverImg" src="https://placehold.co/1080x420/1b4332/d4a373?text=TURMA+BAG+FIN+DE+A%C3%91O" alt="TurmaBag">
     </div>
 
-    
+
+    <!-- PESTAÑA FORMULARIO -->
+    <div class="tab-pane active" id="paneCatalog">
+
+          
       <!-- 0. SECCIÓN INFORMATIVA: SOLO TEXTO E IMAGEN DE LO QUE CONTIENE LA BOLSA -->
       <section class="card">
         <div class="section-header">
           <h2 class="section-title"><i data-lucide="sparkles" style="width:18px;height:18px;"></i> ¿Qué es una Turma Bag?</h2>
           <p class="section-subtitle">Es un bolso multiuso estilo matero, resistente, refozardo con lienzo interior.</p>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="section-header">
-          <h2 class="section-title"><i data-lucide="sparkles" style="width:18px;height:18px;"></i> ¿Qué incluye cada Turma Bag?</h2>
+          <p>¿Qué incluye cada Turma Bag</p>
           <p class="section-subtitle">Cada Turma Bag incluye estos productos elaborados para compartir en estas fiestas.</p>
         </div>
         <div class="showcase-grid" id="showcaseContenidoBolsa"></div>
       </section>
 
 
-    <div class="tabs-nav">
-      <button class="tab-btn active" id="tabCatalogBtn"><i data-lucide="package" style="width:17px;height:17px;"></i>TURMA BAG</button>
-      <button class="tab-btn" id="tabOrdersBtn"><i data-lucide="clock" style="width:17px;height:17px;"></i> PEDIDOS</button>
-    </div>
+      <!-- 1. PRODUCTOS - OPCIONALES -->
+      <section class="card">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="plus-circle" style="width:18px;height:18px;"></i>Elegir Opcionales</h2>
+          <p class="section-subtitle">Podés sumar extras opcionales a cada bolsa (se muestra el costo adicional por unidad).</p>
+        </div>
+        <div class="product-list" id="listOpcionales"></div>
+      </section>
 
-    <!-- PESTAÑA FORMULARIO -->
-    <div class="tab-pane active" id="paneCatalog">
+      <!-- 2. TURMA BAG - BOLSA MULTIUSO -->
+      <section class="card">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="stamp" style="width:18px;height:18px;"></i> Opcionales de la Bolsa</h2>
+          <p class="section-subtitle">También podés añadir personalizaciones en tus bolsos.</p>
+        </div>
+        <div><img id="Turmabag_img" src="/turmabags_apliques.png" alt="Banner Turma Bag"></div>
+        <div class="product-list" id="listBolsaMultiuso"></div>
+      </section>
 
-      <!-- 1. PRODUCTOS - CONTENIDO BOLSA (COLAPSADA POR DEFECTO) -->
+      <!-- 4. PRODUCTOS - CONTENIDO BOLSA (COLAPSADA POR DEFECTO) -->
       <section class="card accordion-card" id="accordionContenidoCard">
         <div class="accordion-header" id="accordionContenidoToggle">
           <div class="section-header">
@@ -917,24 +927,6 @@
         </div>
       </section>
 
-      <!-- 2. PRODUCTOS - OPCIONALES -->
-      <section class="card">
-        <div class="section-header">
-          <h2 class="section-title"><i data-lucide="plus-circle" style="width:18px;height:18px;"></i>Elegir Opcionales</h2>
-          <p class="section-subtitle">Podés sumar extras opcionales a cada bolsa (se muestra el costo adicional por unidad).</p>
-        </div>
-        <div class="product-list" id="listOpcionales"></div>
-      </section>
-
-      <!-- 3. TURMA BAG - BOLSA MULTIUSO -->
-      <section class="card">
-        <div class="section-header">
-          <h2 class="section-title"><i data-lucide="stamp" style="width:18px;height:18px;"></i> Opcionales de la Bolsa</h2>
-          <p class="section-subtitle">También podés añadir personalizaciones en tus bolsos.</p>
-        </div>
-        <div><img id="Turmabag_img" src="/turmabags_apliques.png" alt="Banner Turma Bag"></div>
-        <div class="product-list" id="listBolsaMultiuso"></div>
-      </section>
 
       <!-- 4. CÁLCULO DE PRECIOS Y CANTIDAD DE UNIDADES PEDIDAS -->
       <section class="pricing-box">
@@ -1047,6 +1039,11 @@
         <h2 class="section-title" style="margin-top:8px;"><i data-lucide="clipboard-list" style="width:18px;height:18px;"></i> Historial de Pedidos</h2>
         <div id="ordersList"></div>
       </section>
+    </div>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" id="tabCatalogBtn"><i data-lucide="package" style="width:17px;height:17px;"></i>TURMA BAG</button>
+      <button class="tab-btn" id="tabOrdersBtn"><i data-lucide="clock" style="width:17px;height:17px;"></i> PEDIDOS</button>
     </div>
 
     <!-- PIE DE PÁGINA -->
