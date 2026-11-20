@@ -194,7 +194,7 @@
       gap: 4px;
     }
 
-    .section-title {
+    .section-title, .section-title-editar  {
       font-size: 0.95rem;
       font-weight: 800;
       text-transform: uppercase;
@@ -203,6 +203,9 @@
       align-items: center;
       gap: 8px;
       color: #f67300;
+    }
+    .section-title-editar {
+      color:#868686!important;
     }
 
     .section-subtitle {
@@ -936,8 +939,8 @@
       <section class="card accordion-card" id="accordionBolsaCard">
         <div class="accordion-header" data-target="accordionBolsaCard">
           <div class="section-header">
-            <h2 class="section-title"><i data-lucide="stamp" style="width:18px;height:18px;"></i> Opcionales de la Bolsa</h2>
-            <p class="section-subtitle">Añadí personalizaciones y apliques en tus bolsos.</p>
+            <h2 class="section-title"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i> Opcionales de la Bolsa</h2>
+            <p class="section-subtitle">Añadí personalizaciones y apliques a tus TurmaBags.</p>
           </div>
           <span class="accordion-toggle-btn">
             <span class="toggle-label">Ver</span>
@@ -955,12 +958,12 @@
       <section class="card accordion-card" id="accordionContenidoCard">
         <div class="accordion-header" data-target="accordionContenidoCard">
           <div class="section-header">
-            <h2 class="section-title"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i> Turma Bag - Editar Contenido</h2>
-            <p class="section-subtitle">Por defecto trae 1 unidad de cada ítem. Personalizá cantidades acá.</p>
+            <h2 class="section-title-editar"><i data-lucide="clipboard-pen" style="width:18px;height:18px;"></i> Editar Contenido</h2>
+            <p class="section-subtitle">Personalizá las cantidades de la Turma Bag desde acá.</p>
           </div>
           <span class="accordion-toggle-btn">
             <span class="toggle-label">Editar</span>
-            <i data-lucide="chevron-down" class="accordion-chevron" style="width:16px;height:16px;"></i>
+            <i data-lucide="square-pen" class="accordion-chevron" style="width:16px;height:16px;"></i>
           </span>
         </div>
 
@@ -1035,14 +1038,14 @@
         </div>
 
         <div class="field-group">
-          <label for="inputSolicitadoA">Pedido solicitado a... *</label>
-          <textarea id="inputSolicitadoA" rows="2" placeholder="Nombre del vendedor o referente comercial" required></textarea>
-        </div>
-
-        <div class="field-group">
           <label for="inputFormaPago">Forma de Pago *</label>
           <textarea id="inputFormaPago" placeholder="Indique modalidad de pago (ej: Transferencia bancaria, Seña 50% + saldo contra entrega, etc.)" required></textarea>
         </div>          
+
+        <div class="field-group">
+          <label for="inputSolicitadoA">Pedido solicitado a... *</label>
+          <textarea id="inputSolicitadoA" rows="2" placeholder="Nombre del vendedor o referente comercial" required></textarea>
+        </div>
 
         <span class="sep"></span>
 
